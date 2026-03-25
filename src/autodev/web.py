@@ -77,6 +77,9 @@ def create_app() -> FastAPI:
 
             threading.Thread(target=_plan_and_start, daemon=True).start()
 
+        # Remember this project for the dashboard
+        _known_projects[req.name or project_dir.name] = project_dir
+
         return {"status": "created", "name": req.name or project_dir.name, "directory": str(project_dir)}
 
     @app.get("/api/projects/{name}/status")
@@ -124,11 +127,16 @@ def create_app() -> FastAPI:
     return app
 
 
+# Projects we have seen during this server lifetime.
+# Survives tmux session exits so the dashboard keeps showing them.
+_known_projects: dict[str, Path] = {}
+
+
 def _discover_projects() -> dict[str, Path]:
-    """Discover projects from active autodev tmux sessions."""
+    """Discover projects from active tmux sessions and previously seen projects."""
     from autodev.tmux_session import list_autodev_sessions
 
-    project_dirs: dict[str, Path] = {}
+    # Add projects from active tmux sessions
     for session in list_autodev_sessions():
         pane_path = session.get("pane_path", "")
         if not pane_path:
@@ -138,16 +146,22 @@ def _discover_projects() -> dict[str, Path]:
             continue
         if not (project_dir / "autodev.toml").exists():
             continue
-        project_dirs[project_dir.name] = project_dir
-    return project_dirs
+        _known_projects[project_dir.name] = project_dir
+
+    # Return all known projects (prune deleted directories)
+    to_remove = [k for k, v in _known_projects.items() if not v.is_dir()]
+    for k in to_remove:
+        del _known_projects[k]
+
+    return dict(_known_projects)
 
 
 def _resolve_project(name: str) -> Path:
-    """Resolve a project by name from active tmux sessions."""
+    """Resolve a project by name."""
     project_dirs = _discover_projects()
     project_dir = project_dirs.get(name)
     if project_dir is None:
-        raise HTTPException(404, f"项目 '{name}' 未找到（没有活跃的 tmux 会话）")
+        raise HTTPException(404, f"项目 '{name}' 未找到")
     return project_dir
 
 
